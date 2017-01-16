@@ -10,6 +10,30 @@ public class JwtImpl implements Jwt {
     private int expires_in;
     private String refresh_token;
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setRoles(List<String> roles) {
+        this.roles = roles;
+    }
+
+    public void setTokenType(String token_type) {
+        this.token_type = token_type;
+    }
+
+    public void setAccessToken(String access_token) {
+        this.access_token = access_token;
+    }
+
+    public void setExpiresIn(int expires_in) {
+        this.expires_in = expires_in;
+    }
+
+    public void setRefreshToken(String refresh_token) {
+        this.refresh_token = refresh_token;
+    }
+
     @Override
     public String getUsername() {
         return username;
