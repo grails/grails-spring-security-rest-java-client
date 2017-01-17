@@ -1,13 +1,73 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'groovy'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'org.grails'
+version = '0.2'
 
 repositories {
     jcenter()
 }
+
+targetCompatibility = '1.7'
+sourceCompatibility = '1.7'
 
 dependencies {
     testCompile 'org.codehaus.groovy:groovy-all:2.4.7'
     testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.google.code.gson:gson:2.8.0'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type:Jar) {
+    classifier = 'javadoc'
+    from groovydoc.outputs
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER") ?: project.hasProperty("bintrayUser") ? project.bintrayUser : ''
+    key = System.getenv("BINTRAY_KEY") ?: project.hasProperty("bintrayKey") ? project.bintrayKey : ''
+    publications = ['maven']
+    publish = true
+    pkg {
+        repo = "grails-core"
+        userOrg = project.hasProperty('userOrg') ? project.userOrg : 'grails'
+        name = "grails-spring-security-rest-java-client"
+        desc = "Java library to interact with a Grails app secured with Spring Security Rest Plugin"
+        websiteUrl = "https://github.com/grails/grails-spring-security-rest-java-client"
+        issueTrackerUrl = "https://github.com/grails/grails-spring-security-rest-java-client/issues"
+        vcsUrl = "git@github.com:github.com/grails/grails-spring-security-rest-java-client.git"
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+        }
+    }
 }
