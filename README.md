@@ -4,6 +4,18 @@ Java library to interact with [Spring Security Rest for Grails](http://alvarosan
 
 It uses the [JSON Web Token (JWT)](http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/#_json_web_token) capabilities offered by plugin. 
 
+## Installation
+
+```grovoy
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.grails:java-client-grails-spring-security-rest:0.3'
+}
+```
+
 ## Login
 
 [Authentication Request](http://alvarosanchez.github.io/grails-spring-security-rest/latest/docs/#_authentication_endpoint):
